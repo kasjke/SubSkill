@@ -9,9 +9,8 @@ import com.subskill.exception.MicroSkillNotFoundException;
 import com.subskill.models.MicroSkill;
 import com.subskill.repository.MicroSkillRepository;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,21 +18,17 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class MicroSkillServiceImplementation  implements MicroSkillService{
+@AllArgsConstructor
+public class MicroSkillServiceImplementation implements MicroSkillService {
     private final MicroSkillRepository microSkillRepository;
     private final EditMicroSkillMapper editMicroSkillMapper;
 
-    @Autowired
-    public MicroSkillServiceImplementation(MicroSkillRepository microSkillRepository, EditMicroSkillMapper editMicroSkillMapper) {
-        this.microSkillRepository = microSkillRepository;
-        this.editMicroSkillMapper = editMicroSkillMapper;
-    }
     @Override
     public MicroSkillDto addMicroskill(MicroSkillDto microSkillDto) {
-        if (microSkillRepository.existsByName(microSkillDto.microSkillname())) {
+        if (microSkillRepository.existsByName(microSkillDto.microSkillName())) {
             throw new IllegalMicroSkillStateException();
         }
-      MicroSkill newMicroSkill = MicroSkill.of(microSkillDto);
+        MicroSkill newMicroSkill = MicroSkill.of(microSkillDto);
         microSkillRepository.save(newMicroSkill);
         log.debug("MicroSkill card {} has been saved", microSkillDto);
         return microSkillDto;
@@ -41,15 +36,14 @@ public class MicroSkillServiceImplementation  implements MicroSkillService{
 
     @Override
     public ProductMicroSkillDto updateMicroskill(ProductMicroSkillDto productMicroSkillDto) {
-        MicroSkill existingMicroSkill = microSkillRepository.findByName(productMicroSkillDto.microSkillname())
+        MicroSkill existingMicroSkill = microSkillRepository.findByName(productMicroSkillDto.microSkillName())
                 .orElseThrow(MicroSkillNotFoundException::new);
-        MicroSkill updatedMicroSkill = editMicroSkillMapper.microSkillToEditDto(existingMicroSkill, productMicroSkillDto);
+        MicroSkill updatedMicroSkill = editMicroSkillMapper.microSkillToEditDto(productMicroSkillDto, existingMicroSkill);
         microSkillRepository.save(updatedMicroSkill);
         ProductMicroSkillDto updatedMicroSkillDto = editMicroSkillMapper.microSkillToDto(updatedMicroSkill);
         log.debug("MicroSkill {} has been updated", productMicroSkillDto);
         return updatedMicroSkillDto;
     }
-
 
 
     @Override
