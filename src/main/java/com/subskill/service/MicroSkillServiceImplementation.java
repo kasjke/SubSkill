@@ -3,17 +3,27 @@ package com.subskill.service;
 
 import com.subskill.dto.EditMicroSkillMapper;
 import com.subskill.dto.MicroSkillDto;
+import com.subskill.dto.PageMicroSkillDto;
 import com.subskill.dto.ProductMicroSkillDto;
 import com.subskill.exception.IllegalMicroSkillStateException;
 import com.subskill.exception.MicroSkillNotFoundException;
 import com.subskill.models.MicroSkill;
 import com.subskill.repository.MicroSkillRepository;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+
+
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +32,8 @@ import java.util.stream.Collectors;
 public class MicroSkillServiceImplementation implements MicroSkillService {
     private final MicroSkillRepository microSkillRepository;
     private final EditMicroSkillMapper editMicroSkillMapper;
+
+
 
     @Override
     public MicroSkillDto addMicroskill(MicroSkillDto microSkillDto) {
@@ -53,9 +65,13 @@ public class MicroSkillServiceImplementation implements MicroSkillService {
         log.debug("Microskill with ID {} has been deleted", id);
     }
 
-    @Override
-    public List<MicroSkill> findAllMicroSkill() {
-        return microSkillRepository.findAll();
+    public List<ProductMicroSkillDto> findAllMicroSkill() {
+        List<MicroSkill> microSkills = microSkillRepository.findAll();
+        List<ProductMicroSkillDto> productMicroSkillDtos = microSkills.stream()
+                .map(editMicroSkillMapper::microSkillToDto)
+                .collect(Collectors.toList());
+        log.debug("All microskills: {}", productMicroSkillDtos);
+        return productMicroSkillDtos;
     }
 
     @Override
@@ -69,12 +85,28 @@ public class MicroSkillServiceImplementation implements MicroSkillService {
         return rating;
     }
 
+//    @Override
+//    public ProductMicroSkillDto getViewsCount(Long views) {
+//        List<MicroSkill> microSkills = microSkillRepository.findByViews(views);
+//            MicroSkill microSkill = microSkills.get(0);
+//            log.debug("All our views {}", views);
+//            return editMicroSkillMapper.microSkillEditDtoViews(microSkill);
+//    }
+
     @Override
-    public long getViewsCount(long id) {
-        MicroSkill microSkill = microSkillRepository.findById(id).orElseThrow(MicroSkillNotFoundException::new);
-        return microSkill.getViews();
+    public PageMicroSkillDto findAllPage(PageRequest pageRequest) {
+        Page<PageMicroSkillDto> pagedData = microSkillRepository.findAllPage(pageRequest);
+        PageMicroSkillDto pageMicroSkillDto = pagedData.getContent().get(0);
+        log.debug("All our page {}", pageRequest);
+        return pageMicroSkillDto;
 
     }
-
+//    @Override
+//    public ProductMicroSkillDto getViewsCount(String name) {
+//        MicroSkill microSkill = microSkillRepository.findByName(name)
+//                .orElseThrow(MicroSkillNotFoundException::new);
+//
+//        return editMicroSkillMapper.microSkillEditDtoViews(microSkill);
+//    }
 
 }

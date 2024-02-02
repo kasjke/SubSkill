@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,15 +37,14 @@ public class MicroSkill {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "learningtime")
+    @Column(name = "learningTime")
     private String learningTime;
-
     @Enumerated(EnumType.STRING)
-    @Column(name = "tags")
+    @ColumnDefault("TBA")
     private Tags tags;
-
     @Enumerated(EnumType.STRING)
-    @Column(name = "level")
+    @ColumnDefault("BASIC")
+
     private Level level;
 
     @Column(name = "rating")
@@ -64,11 +65,10 @@ public class MicroSkill {
         microSkill.name = microSkillDto.microSkillName();
         microSkill.photo = microSkillDto.microSkillPhoto();
         microSkill.rating = microSkillDto.microSkillRating();
-        
-       // microSkill.technology = microSkillDto.technologyId(); заглушка
+
+        // microSkill.technology = microSkillDto.technologyId(); заглушка
         return microSkill;
     }
-
 
 
 }
