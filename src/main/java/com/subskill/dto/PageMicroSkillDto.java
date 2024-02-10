@@ -21,11 +21,11 @@ public record PageMicroSkillDto(@NotEmpty(message = MISSING_MICROSKILL_NAME_MESS
                             @NotEmpty(message = MISSING_MICROSKILL_LEARNING_TIME_MESSAGE)
                             String learningTime,
                             @NotEmpty (message = MISSING_MICROSKILL_TAGS_MESSAGE)
-                            List<Tags> tags,
+                                List<Tags> tags,
                             @NotNull(message = MISSING_MICROSKILL_LEVEL_MESSAGE)
                             Level level,
-                             @NotNull(message = MISSING_MICROSKILL_RATING_MESSAGE)
-                              Double rating,
+                            @NotNull(message = MISSING_MICROSKILL_RATING_MESSAGE)
+                              String rating,
                             @NotNull(message = MISSING_MICROSKILL_VIEWS_MESSAGE)
                               Integer views,
                             @NotNull(message = MISSING_MICROSKILL_CREATING_DATE_MESSAGE)

@@ -51,10 +51,10 @@ public class MicroSkill {
     private Level level;
 
     @Column(name = "rating")
-    private double rating;
+    private Double rating;
 
     @Column(name = "views")
-    private int views;
+    private Integer views;
 
     @JsonIgnore
     @ManyToOne

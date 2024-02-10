@@ -16,7 +16,7 @@ public interface MicroSkillService {
 
     void deleteMicroSkill(Long id);
 
-    Page<PageMicroSkillDto> findMicroSkillByRatingWithPage(Pageable paging, String rating);
+    Page<PageMicroSkillDto> findMicroSkillByRatingWithPage(Pageable paging, Double rating);
 
     Page<PageMicroSkillDto> findMicroSkillByNameWithPage(Pageable paging, String name);
 
