@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 import java.util.List;
 
 @Data
@@ -23,7 +22,6 @@ public class Profession {
 
     @Column(name = "name", nullable = false)
     private String name;
-
     @ManyToMany
     @JoinTable(
             name = "profession_technologies",

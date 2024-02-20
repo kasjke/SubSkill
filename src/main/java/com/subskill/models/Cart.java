@@ -1,6 +1,6 @@
 package com.subskill.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +27,6 @@ public class Cart {
     @JoinColumn(name = "id")
     private User user;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "listOfMicroSkills")
     private List<MicroSkill> listOfMicroSkills;
 }

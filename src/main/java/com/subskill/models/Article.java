@@ -3,7 +3,6 @@ package com.subskill.models;
 import com.subskill.dto.ArticleDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

@@ -9,6 +9,7 @@ import com.subskill.repository.CartRepository;
 import com.subskill.service.CartService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @AllArgsConstructor
 public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
@@ -23,10 +25,11 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public CartDto addMicroSkillToCart(MicroSkillDto microSkillDto) {
-        MicroSkill microSkill = MicroSkill.of(microSkillDto);
-        Optional<Cart> optionalCart = cartRepository.findMicroSkillBy(microSkillDto);
-        Cart cart = optionalCart.orElseGet(Cart::new);
+    public CartDto addMicroSkillToCart(MicroSkill microSkill) {
+
+        Optional<Cart> optionalCart = cartRepository.findMicroSkillInCart(microSkill);
+        Cart cart;
+        cart = optionalCart.orElseGet(Cart::new);
         cart.getListOfMicroSkills().add(microSkill);
         cartRepository.save(cart);
         return modelMapper.map(cart, CartDto.class);

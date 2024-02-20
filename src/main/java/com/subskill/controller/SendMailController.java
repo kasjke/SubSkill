@@ -16,7 +16,7 @@ public class SendMailController {
 
     private final SendMail mailService;
 
-    public SendMailController(@Qualifier("sendMail") SendMail mailService) {
+    public SendMailController(@Qualifier("sendMailServiceImpl") SendMail mailService) {
         this.mailService = mailService;
     }
 
