@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.Locale;
 
 @Service
-@AllArgsConstructor
 public class SendMailServiceImpl implements SendMailService {
     private final JavaMailSender javaMailSender;
     private final MessageSource messageSource;
@@ -34,7 +33,7 @@ public class SendMailServiceImpl implements SendMailService {
         simpleMailMessage.setSubject("Welcome from team SubSkill");
         simpleMailMessage.setText("Hello from team SubSkill, Happy to see you on our website!");
         simpleMailMessage.setTo(mail);
-        simpleMailMessage.setFrom("kasmatuy2k17@gmail.com");
+        simpleMailMessage.setFrom(mailAddress);
         javaMailSender.send(simpleMailMessage);
         return "Mail sent successfully";
     }
